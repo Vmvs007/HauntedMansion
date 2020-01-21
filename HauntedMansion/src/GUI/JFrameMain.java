@@ -8,18 +8,37 @@ package GUI;
 import static java.awt.Color.black;
 import static java.awt.Color.lightGray;
 import static java.awt.Color.red;
+import static java.awt.Color.white;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author vmvs0
  */
 public class JFrameMain extends javax.swing.JFrame {
+
+    private BufferedImage image;
 
     /**
      * Creates new form JFrameMain
@@ -38,20 +57,32 @@ public class JFrameMain extends javax.swing.JFrame {
     private void initComponents() {
 
         panelBackground = new javax.swing.JPanel();
+        labelBack = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         labelGameName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Haunted Mansion");
-        setPreferredSize(new java.awt.Dimension(1080, 720));
 
-        panelBackground.setBackground(new java.awt.Color(153, 153, 153));
+        panelBackground.setBackground(new java.awt.Color(0, 0, 0));
+        panelBackground.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                panelBackgroundComponentAdded(evt);
+            }
+        });
         panelBackground.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 panelBackgroundComponentShown(evt);
             }
         });
 
+        ImageIcon icon = new ImageIcon("HauntedImg02.png");
+        labelBack.setIcon(icon);
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
         labelGameName.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        labelGameName.setForeground(new java.awt.Color(255, 255, 255));
         labelGameName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelGameName.setText("Haunted Mansion Game");
         labelGameName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -64,38 +95,51 @@ public class JFrameMain extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(labelGameName)
+                .addGap(29, 29, 29))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelGameName)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout panelBackgroundLayout = new javax.swing.GroupLayout(panelBackground);
         panelBackground.setLayout(panelBackgroundLayout);
         panelBackgroundLayout.setHorizontalGroup(
             panelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBackgroundLayout.createSequentialGroup()
-                .addGap(339, 339, 339)
-                .addComponent(labelGameName)
-                .addContainerGap(338, Short.MAX_VALUE))
+            .addComponent(labelBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBackgroundLayout.createSequentialGroup()
+                .addContainerGap(365, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(389, 389, 389))
         );
         panelBackgroundLayout.setVerticalGroup(
             panelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelGameName)
-                .addContainerGap(637, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelBack, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -104,34 +148,37 @@ public class JFrameMain extends javax.swing.JFrame {
 
     private void labelGameNameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelGameNameMouseEntered
         //Changes label color to Red when Mouse Enters
-        this.labelGameName.setBackground(red); 
+        this.labelGameName.setBackground(red);
         this.labelGameName.setForeground(red);
     }//GEN-LAST:event_labelGameNameMouseEntered
 
     private void labelGameNameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelGameNameMouseExited
         //Changes label color back to Black when Mouse Exits
-        this.labelGameName.setBackground(black); 
-        this.labelGameName.setForeground(black);
+        this.labelGameName.setBackground(white);
+        this.labelGameName.setForeground(white);
     }//GEN-LAST:event_labelGameNameMouseExited
 
     private void panelBackgroundComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelBackgroundComponentShown
-        
+
     }//GEN-LAST:event_panelBackgroundComponentShown
+
+    private void panelBackgroundComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_panelBackgroundComponentAdded
+
+    }//GEN-LAST:event_panelBackgroundComponentAdded
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         //Script starts here
         System.out.println("_______________ Haunted Mansion Starts _______________");
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -150,10 +197,6 @@ public class JFrameMain extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        ImageIcon icon = new ImageIcon("HauntedImg.jpg"); 
-        JLabel thumb = new JLabel();
-        thumb.setIcon(icon);
-        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -163,6 +206,8 @@ public class JFrameMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelBack;
     private javax.swing.JLabel labelGameName;
     private javax.swing.JPanel panelBackground;
     // End of variables declaration//GEN-END:variables
