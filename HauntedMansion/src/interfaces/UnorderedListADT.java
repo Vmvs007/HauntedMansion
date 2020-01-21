@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hauntedmansion;
+package interfaces;
 
 /**
  *
  * @author @author Ricardo Pereira - 8170495 | Vitor Santos - 8170312
  */
-public class HauntedMansion {
+public interface UnorderedListADT<T> extends ListADT<T> {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+    public void addToFront(T element);
+
+    public void addToRear(T element);
+
+    public void addAfter(T element,T target);
+
 }
