@@ -184,6 +184,7 @@ public class JFrameMain extends javax.swing.JFrame {
         );
 
         mansionPanel.setBackground(new java.awt.Color(153, 102, 255));
+        mansionPanel.setOpaque(false);
 
         ImageIcon icon = new ImageIcon("HauntedImg02.png");
         labelBack.setIcon(icon);
@@ -255,25 +256,22 @@ public class JFrameMain extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-   /**
-    * 
-    * @param soundName 
-    */
-   public void playSound(String soundName){
-   try 
-   {
-    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
-    Clip clip = AudioSystem.getClip();
-    clip.open(audioInputStream);
-    clip.start();
-   }
-   catch(Exception ex)
-   {
-     System.out.println("Error with playing sound.");
-     ex.printStackTrace( );
-   }
- }
-   
+    /**
+     *
+     * @param soundName
+     */
+    public void playSound(String soundName) {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
     private void panelBackgroundComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelBackgroundComponentShown
 
     }//GEN-LAST:event_panelBackgroundComponentShown
@@ -297,16 +295,13 @@ public class JFrameMain extends javax.swing.JFrame {
 
     private void creditsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditsButtonActionPerformed
         //Quando o creditsButton é premido, abre a janela dos créditos
-           java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JFrameCredits().setVisible(true);
-            }
-        });
+        JFrameCredits creditsFrame = new JFrameCredits();
+        creditsFrame.setVisible(true);
     }//GEN-LAST:event_creditsButtonActionPerformed
 
     private void titleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleButtonActionPerformed
         // TODO add your handling code here:
-        playSound("SwampSound.wav");
+        playSound("Ghost.wav");
     }//GEN-LAST:event_titleButtonActionPerformed
 
     /**
