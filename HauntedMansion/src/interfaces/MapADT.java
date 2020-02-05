@@ -9,7 +9,7 @@ package interfaces;
  *
  * @author @author Ricardo Pereira - 8170495 | Vitor Santos - 8170312
  */
-public interface NetworkADT<T> extends GraphADT<T> {
+public interface MapADT<T> extends GraphADT<T> {
     
     /**
  * Inserts an edge between two vertices of this graph.

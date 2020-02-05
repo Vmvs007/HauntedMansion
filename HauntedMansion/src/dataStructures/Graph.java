@@ -5,13 +5,14 @@
  */
 package dataStructures;
 
+import hauntedMansionApp.*;
 import interfaces.GraphADT;
 import java.util.Arrays;
 import java.util.Iterator;
 
 /**
  *
- * @author Ricardo Pereira - 8170495 | Vitor Santos - 8170312
+ * @author Vitor Santos - 8170312
  */
 
 public class Graph<T> implements GraphADT<T> {
@@ -25,6 +26,26 @@ public class Graph<T> implements GraphADT<T> {
         numVertices = 0;
         this.adjMatrix = new double[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
         this.vertices = (T[]) (new Object[DEFAULT_CAPACITY]);
+    }
+
+    public void setVertex(T vertex) {
+        Aposento[] map = new Aposento[numVertices];
+        Aposento aposento = (Aposento) vertex;
+        int i = 0;
+
+        while (i < numVertices) {
+            map[i] = (Aposento) vertices[i];
+            i++;
+        }
+
+        i = 0;
+
+        while (i < numVertices) {
+            if (aposento.getAposento() == map[i].getAposento()) {
+                vertices[i] = (T) aposento;
+            }
+            i++;
+        }
     }
 
     /**
@@ -92,6 +113,31 @@ public class Graph<T> implements GraphADT<T> {
             return false;
         }
 
+    }
+    
+/**
+ * Método que retorna um aposento
+ * 
+ * @param aposento
+ * @return 
+ */
+    public Aposento getVertex(String aposento) {
+        int i = 0;
+        Aposento[] map = new Aposento[vertices.length];
+
+        while (i < vertices.length) {
+            map[i] = (Aposento) vertices[i];
+             
+            i++;
+        }
+        i = 0;
+        while (i <map.length) {
+            if (aposento == map[i].getAposento()) {
+                return map[i];
+            }
+            i++;
+        }
+        return null;
     }
 
     public Iterator adjVertex(T vertex) {
@@ -318,6 +364,110 @@ public class Graph<T> implements GraphADT<T> {
         return -1;
     }
 
+    public Iterator gameSimulation(T vertex, String ligacao) {
+        Iterator connectedAposentos;
+        Iterator[] shortPath;
+        Aposento aux;
+        Aposento[] map = new Aposento[numVertices];
+        LinkedHeap teste = new LinkedHeap();
+        ArrayUnorderedList aposentosLigados = new ArrayUnorderedList();
+        ArrayUnorderedList aposentos1 = new ArrayUnorderedList();
+        ArrayUnorderedList aposentos2 = new ArrayUnorderedList();
+        String[] ligacoes;
+        double[][] indexWeight = new double[numVertices][2];
+        double auxD;
+        T auxT;
+        int auxI;
+
+        int i = 0, j = 0, z = 0;
+
+        connectedAposentos = iteratorBFS(vertex);
+        while (connectedAposentos.hasNext()) {
+            map[i] = (Aposento) connectedAposentos.next();
+            i++;
+        }
+
+        while (j < i) {
+            ligacoes = map[j].getLigacoes();
+            while (z < ligacoes.length) {
+                if (ligacoes[z].equals(ligacao)) {
+                    aposentosLigados.addToRear(map[j]);
+                }
+                z++;
+            }
+            z = 0;
+            j++;
+        }
+
+        j = 0;
+        shortPath = new Iterator[aposentosLigados.size()];
+
+        while (!aposentosLigados.isEmpty()) {
+            auxT = (T) aposentosLigados.removeFirst();
+            shortPath[j] = iteratorShortestPath(vertex, auxT);
+
+            indexWeight[j][1] = calculatePathWeigth(shortPath[j]);
+            teste.addElement(indexWeight[j][1]);
+
+            shortPath[j] = iteratorShortestPath(vertex, auxT);
+
+            while (shortPath[j].hasNext()) {
+                aux = (Aposento) shortPath[j].next();
+                indexWeight[j][0] = aux.getFantasma();
+            }
+            j++;
+        }
+        i = 0;
+
+        while (!teste.isEmpty()) {
+            auxD = (double) teste.removeMin();
+            while (i < j) {
+                if (indexWeight[i][1] == auxD) {
+                    aposentos1.addToRear(indexWeight[i][0]);
+
+                }
+                i++;
+            }
+            i = 0;
+        }
+
+        while (!aposentos1.isEmpty()) {
+
+            auxD = (double) aposentos1.removeFirst();
+            auxI = (int) auxD;
+            //aposentos2.addToRear(getVertex(auxI));
+        }
+
+        return aposentos2.iterator();
+    }
+
+    public void orderIndexWeight(double[][] indexWeight, int size) {
+        int i = 0;
+
+    }
+
+    public double calculatePathWeigth(Iterator path) {
+        Aposento[] map = new Aposento[numVertices];
+        Iterator pathAux;
+        pathAux = path;
+        int i = 0, j = 0;
+        double weight = 0;
+
+        while (pathAux.hasNext()) {
+            map[i] = (Aposento) pathAux.next();
+            i++;
+        }
+
+        i--;
+        while (j < i) {
+            weight = weight + (1.0 / map[j + 1].getFantasma());
+            j++;
+        }
+
+        System.out.println(weight);
+        return weight;
+    }
+
     @Override
     public boolean isEmpty() {
         return (vertices.length == 0);
@@ -355,7 +505,7 @@ public class Graph<T> implements GraphADT<T> {
 
     }
 
-    public Iterator reachableUsers(T vertex) {
+    public Iterator reachableAposentos(T vertex) {
         Iterator itr;
 
         itr = iteratorBFS(vertex);
@@ -363,6 +513,33 @@ public class Graph<T> implements GraphADT<T> {
         itr.next();
 
         return itr;
+
+    }
+
+    public Iterator unreachableAposentos(T vertex) {
+        Iterator itr;
+        Aposento[] mapAux = new Aposento[size()];
+        ArrayUnorderedList lista = new ArrayUnorderedList();
+        ArrayUnorderedList resultList = new ArrayUnorderedList();
+
+        int i = 0, j = 0;
+
+        itr = iteratorBFS(vertex);
+
+        while (itr.hasNext()) {
+            lista.addToFront((Aposento) itr.next());
+        }
+
+        i = 0;
+
+        while (i < size()) {
+            if (!lista.contains(vertices[i])) {
+                resultList.addToRear((Aposento) vertices[i]);
+            }
+            i++;
+        }
+
+        return resultList.iterator();
 
     }
 

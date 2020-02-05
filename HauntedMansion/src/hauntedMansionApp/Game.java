@@ -14,9 +14,9 @@ public class Game {
 
     private String nome;
     private int pontos;
-    private Map[] mapa;
+    private Aposento[] mapa;
 
-    public Game(String nome, int pontos, Map[] mapa) {
+    public Game(String nome, int pontos, Aposento[] mapa) {
         this.nome = nome;
         this.pontos = pontos;
         this.mapa = mapa;
@@ -38,11 +38,11 @@ public class Game {
         this.pontos = pontos;
     }
 
-    public Map[] getMapa() {
+    public Aposento[] getMapa() {
         return mapa;
     }
 
-    public void setMapa(Map[] mapa) {
+    public void setMapa(Aposento[] mapa) {
         this.mapa = mapa;
     }
 
