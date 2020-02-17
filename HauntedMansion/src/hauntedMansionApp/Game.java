@@ -6,6 +6,7 @@
 package hauntedMansionApp;
 
 import java.util.Arrays;
+
 /**
  *
  * @author vmvs0
@@ -15,6 +16,11 @@ public class Game {
     private String nome;
     private int pontos;
     private Aposento[] mapa;
+    private int entrada;
+
+    public int getEntrada() {
+        return entrada;
+    }
 
     public Game(String nome, int pontos, Aposento[] mapa) {
         this.nome = nome;
@@ -45,6 +51,11 @@ public class Game {
     public void setMapa(Aposento[] mapa) {
         this.mapa = mapa;
     }
+    
+    public void setEntrada(int index) {
+        this.entrada = index;
+    }
+
 
     @Override
     public String toString() {

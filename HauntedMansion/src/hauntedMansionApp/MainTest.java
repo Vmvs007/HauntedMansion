@@ -6,11 +6,12 @@
 package hauntedMansionApp;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.Scanner;
 
 /**
  *
@@ -23,18 +24,115 @@ public class MainTest {
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
+        //Programa começa
+        System.out.println("_____ HAUNTED MANSION STARTS _____");
+
+        /*
         //Lê o path para o ficheiro JSON
         String path = ("mapa.json");
 
+        //Declara variáveis
         Game game;
         int i = 0;
 
+        //Abre o ficheiro
         FileManager fm = new FileManager();
         game = fm.readFile(path);
-
+        
+        
+        //Imprime o game
         System.out.println(game.toString());
         System.out.println("");
-        i++;
+         */
+        //Declara variáveis
+        int i = 0;
+        Aposento[] mapa= new Aposento[9];
+        LinkedMap teste;
+        int opcao = 0;
+        Game game;
+        teste = new LinkedMap();
+        
+        //Menu da aplicacao
+        do {
+            System.out.println("\n\n___________________ HAUNTED MANSION GAME ___________________");
+            System.out.println("\n                  =========================");
+            System.out.println("                  |     1 - Inserir Mapa    |");
+            System.out.println("                  |     2 - Jogar           |");
+            System.out.println("                  |     3 - Visualizar Mapa |");
+            System.out.println("                  |     4 - Classificacoes  |");
+            System.out.println("                  |     5 - Opcao 5         |");
+            System.out.println("                  |     6 - Opcao 6         |");
+            System.out.println("                  |     0 - Sair            |");
+            System.out.println("                  =========================\n");
+
+            System.out.print("\n");
+            System.out.println("Insira uma opcao:");
+            Scanner in = new Scanner(System.in);
+            opcao = in.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("Inserir Mapa");
+
+                    //Lê o path para o ficheiro
+                    System.out.println("Inserir path do ficheiro: ");
+                    Scanner scanner = new Scanner(System.in);
+                    String path = scanner.nextLine();
+                    System.out.println("O path inserido foi " + path);
+
+                    FileManager fm = new FileManager();
+                    int j = 0;
+
+                    game = fm.readFile(path);
+                    
+                    while (i < game.getMapa().length) {
+                        if (game.getMapa()[i].getLigacoes()[0].equals("entrada"))
+                        {
+                            game.setEntrada(i);
+                        }
+                        teste.addVertex(game.getMapa()[i]);
+                        System.out.println(game.getMapa()[i]);
+                        i++;
+                    }
+                    
+                    
+                    
+                    while (i < game.getMapa().length) {
+                        
+                        if (game.getMapa()[i].getLigacoes()[0].equals("exterior"))
+                        {
+                          teste.iteratorShortestPath(game.getMapa()[game.getEntrada()], game.getMapa()[i]);
+                          
+                        }
+                        
+                        i++;
+                    }
+                    
+                    
+                    break;
+                case 2:
+                    System.out.println("___________________ NOVO JOGO ___________________");
+                    
+                    break;
+                case 3:
+                    System.out.println("Case 2");
+                    break;
+                case 4:
+                    System.out.println("Case 2");
+                    break;
+                case 5:
+                    System.out.println("Case 5");
+                    break;
+                case 6:
+                    System.out.println("Case 5");
+                    break;
+                case 0:
+                    System.out.println("___________________ HAUNTED MANSION CLOSES ___________________");
+                    break;
+                default:
+                    System.out.println("Opção Inválida!");
+                    break;
+            }
+        } while (opcao != 0);
     }
 }
-

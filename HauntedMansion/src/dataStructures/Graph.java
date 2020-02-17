@@ -267,6 +267,7 @@ public class Graph<T> implements GraphADT<T> {
 
     @Override
     public Iterator iteratorShortestPath(T startVertex, T targetVertex) {
+        
         Integer x, startVertexaux, targetVertexaux, aux;
         startVertexaux = getVertexIndex(startVertex);
         targetVertexaux = getVertexIndex(targetVertex);

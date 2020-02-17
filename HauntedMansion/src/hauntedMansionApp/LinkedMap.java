@@ -39,11 +39,11 @@ public class LinkedMap<T> extends Graph<T> implements MapADT<T> {
      */
     public void calculateWeigth() {
         int i = 0, j = 0;
-        Aposento[] map = new Aposento[vertices.length];
+        Aposento[] mapa = new Aposento[vertices.length];
         String[] ligacoes;
 
         while (i < vertices.length) {
-            map[i] = (Aposento) vertices[i];
+            mapa[i] = (Aposento) vertices[i];
             i++;
         }
 
@@ -51,11 +51,11 @@ public class LinkedMap<T> extends Graph<T> implements MapADT<T> {
 
         while (i < numVertices) {
 
-            ligacoes = map[i].getLigacoes();
+            ligacoes = mapa[i].getLigacoes();
 
             while (j < ligacoes.length) {
 
-                addEdge((T) map[i], (T) getVertex(ligacoes[j]), (1.0 / getVertex(ligacoes[j]).getFantasma()));
+                addEdge((T) mapa[i], (T) getVertex(ligacoes[j]), (1.0 / getVertex(ligacoes[j]).getFantasma()));
                 j++;
             }
             j = 0;

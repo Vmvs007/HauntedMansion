@@ -16,6 +16,7 @@ public class Aposento {
     private String aposento;
     private int fantasma;
     private String[] ligacoes;
+    private int entrada;
 
     public Aposento(String aposento, int fantasma, String[] ligacoes) {
         this.aposento = aposento;
@@ -43,7 +44,7 @@ public class Aposento {
         return ligacoes;
     }
 
-    public void setLigacoes(String[] ligacoes) {
+    public void setLigacoes(String[] ligacoes) {        
         this.ligacoes = ligacoes;
     }
 
