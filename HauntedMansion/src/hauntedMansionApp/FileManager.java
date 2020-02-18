@@ -71,7 +71,7 @@ public class FileManager {
 
                     }
                     
-                    mapa[contaAposentos] = new Aposento(aposento, fantasma, ligacoes);
+                    mapa[contaAposentos] = new Aposento(aposento, fantasma, ligacoes,contaAposentos);
                     contaAposentos++;
                 }
             }

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -81,7 +82,7 @@ public class MainTest {
                     System.out.println("O path inserido foi " + path);
 
                     FileManager fm = new FileManager();
-                    int j = 0;
+                    i= 0;
 
                     game = fm.readFile(path);
                     
@@ -91,26 +92,53 @@ public class MainTest {
                             game.setEntrada(i);
                         }
                         teste.addVertex(game.getMapa()[i]);
-                        System.out.println(game.getMapa()[i]);
+                        
+                        //System.out.println(game.getMapa()[i]);
                         i++;
                     }
                     
-                    
+                    i=0;
                     
                     while (i < game.getMapa().length) {
+                        teste.addVertex2(game.getMapa()[i],teste);
                         
+                        //Cada iteração que faz tenta encontrar uma solução mais eficaz
                         if (game.getMapa()[i].getLigacoes()[0].equals("exterior"))
                         {
-                          teste.iteratorShortestPath(game.getMapa()[game.getEntrada()], game.getMapa()[i]);
-                          
+                          teste.dijkstraShortestPath(game.getMapa()[game.getEntrada()]);
                         }
                         
                         i++;
                     }
                     
+                    i=0;
+                    boolean canPlay=true;
+                    
+                    System.out.println("Caminhos mais curtos para cada saída: ");
+
+                    while (i < game.getMapa().length) {
+                        
+                        if (game.getMapa()[i].getLigacoes()[0].equals("exterior"))
+                        {
+                          double custo = teste.custoShortestPath(game.getMapa()[game.getEntrada()],game.getMapa()[i]);
+                            if (custo > game.getPontos()) {
+                                canPlay = false;
+                            }
+                        }
+                        
+                        i++;
+                    }
+                    
+                    if (canPlay) {
+                        System.out.println("Mapa válido");
+                    }
+                    else System.out.println("Mapa inválido! Por favor use um mapa novo!");
                     
                     break;
                 case 2:
+                    Aposento a = teste.getVertex("hall");
+                    System.out.println(a.getAposento());
+                    System.out.println(teste.printADJMatrix());
                     System.out.println("___________________ NOVO JOGO ___________________");
                     
                     break;

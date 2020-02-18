@@ -7,20 +7,48 @@ package dataStructures;
 
 import hauntedMansionApp.*;
 import interfaces.GraphADT;
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  *
  * @author Vitor Santos - 8170312
  */
-
 public class Graph<T> implements GraphADT<T> {
 
     protected final int DEFAULT_CAPACITY = 5;
     protected int numVertices; // number of vertices in the graph
     protected double[][] adjMatrix; // adjacency matrix
     protected T[] vertices; //Value of Vertices
+    
+    int[] verticesTabela;
+    Double[] distanciaMaisCurtaDoStartVertex;
+    int[] verticeAnterior; 
+
+    public int[] getVerticesTabela() {
+        return verticesTabela;
+    }
+
+    public void setVerticesTabela(int[] verticesTabela) {
+        this.verticesTabela = verticesTabela;
+    }
+
+    public Double[] getDistanciaMaisCurtaDoStartVertex() {
+        return distanciaMaisCurtaDoStartVertex;
+    }
+
+    public void setDistanciaMaisCurtaDoStartVertex(Double[] distanciaMaisCurtaDoStartVertex) {
+        this.distanciaMaisCurtaDoStartVertex = distanciaMaisCurtaDoStartVertex;
+    }
+
+    public int[] getVerticeAnterior() {
+        return verticeAnterior;
+    }
+
+    public void setVerticeAnterior(int[] verticeAnterior) {
+        this.verticeAnterior = verticeAnterior;
+    }
+    
 
     public Graph() {
         numVertices = 0;
@@ -78,11 +106,38 @@ public class Graph<T> implements GraphADT<T> {
             expandCapacityMatriz();
         }
         vertices[numVertices] = vertex;
-        for (int i = 0; i <= numVertices; i++) {
-            adjMatrix[numVertices][i] = 0.;
-            adjMatrix[i][numVertices] = 0;
+        Aposento ver = (Aposento) vertex;
+        
+        for (int i = 0; i <= numVertices ; i++) {
+            adjMatrix[numVertices][i] = -1;
+            adjMatrix[i][numVertices] = -1;
         }
         numVertices++;
+    }
+    public void addVertex2(T vertex, LinkedMap map) {
+        if (numVertices == vertices.length) {
+            expandCapacityArray();
+            expandCapacityMatriz();
+        }
+        Aposento ver = (Aposento) vertex;
+        
+
+        //Peso de si próprio
+        //adjMatrix[ver.getIndex()][ver.getIndex()] = ver.getFantasma();
+        
+        for (int i = 0; i < ver.getLigacoes().length; i++) {
+            //System.out.println(ver.getLigacoes()[i]);
+            if (!(ver.getLigacoes()[i].equals("entrada")) && !(ver.getLigacoes()[i].equals("exterior"))) {
+                //System.out.println("OLA " + ver.getLigacoes()[i]);
+                Aposento aux = map.getVertex(String.valueOf(ver.getLigacoes()[i]));
+               // System.out.println(aux.getAposento());
+                adjMatrix[ver.getIndex()][aux.getIndex()] = aux.getFantasma();
+                //System.out.println(aux.getFantasma());
+            }
+            
+        }
+        
+
     }
 
     @Override
@@ -114,29 +169,48 @@ public class Graph<T> implements GraphADT<T> {
         }
 
     }
-    
-/**
- * Método que retorna um aposento
- * 
- * @param aposento
- * @return 
- */
+
+    /**
+     * Método que retorna um aposento
+     *
+     * @param aposento
+     * @return
+     */
     public Aposento getVertex(String aposento) {
         int i = 0;
         Aposento[] map = new Aposento[vertices.length];
 
-        while (i < vertices.length) {
+        while (vertices[i] != null) {
             map[i] = (Aposento) vertices[i];
-             
-            i++;
-        }
-        i = 0;
-        while (i <map.length) {
-            if (aposento == map[i].getAposento()) {
+            if (map[i].getAposento().equals(aposento)) {
                 return map[i];
             }
             i++;
+            
         }
+        
+        return null;
+    }
+    
+    /**
+     * Método que retorna um aposento
+     *
+     * @param index
+     * @return
+     */
+    public Aposento getVertexByIndex(int index) {
+        int i = 0;
+        Aposento[] map = new Aposento[vertices.length];
+
+        while (vertices[i] != null) {
+            map[i] = (Aposento) vertices[i];
+            if (map[i].getIndex() == index) {
+                return map[i];
+            }
+            i++;
+            
+        }
+        
         return null;
     }
 
@@ -267,10 +341,12 @@ public class Graph<T> implements GraphADT<T> {
 
     @Override
     public Iterator iteratorShortestPath(T startVertex, T targetVertex) {
-        
+
         Integer x, startVertexaux, targetVertexaux, aux;
         startVertexaux = getVertexIndex(startVertex);
         targetVertexaux = getVertexIndex(targetVertex);
+        
+        
 
         int index;
         double weight;
@@ -578,15 +654,139 @@ public class Graph<T> implements GraphADT<T> {
     public String printADJMatrix() {
         int i = 0, j = 0;
         String matriz = "";
-        while (i < adjMatrix.length) {
-            while (j < adjMatrix.length) {
+        while (i < this.numVertices) {
+            while (j < this.numVertices) {
                 matriz = matriz + adjMatrix[i][j] + " |";
                 j++;
             }
+            matriz += " - "+ this.vertices[i];
             j = 0;
             i++;
             matriz = matriz + "\n";
         }
         return matriz;
+    }
+    
+    public void dijkstraShortestPath(T startVertex){
+        
+        Aposento start = (Aposento) startVertex;
+        //Aposento finish = (Aposento) targetVertex;
+        
+        ArrayList<Integer> visitados = new ArrayList<Integer>();
+        ArrayList<String> porVisitar = new ArrayList<String>();
+        
+        //Tabela de decisão
+        int[] verticesTabela = new int[vertices.length];
+        Double[] distanciaMaisCurtaDoStartVertex = new Double[vertices.length];
+        int[] verticeAnterior = new int[vertices.length]; 
+        
+        //Inicializar dados no porVisitar
+        
+        int i = 0;
+        Aposento[] map = new Aposento[vertices.length];
+        while (vertices[i] != null) {
+            map[i] = (Aposento) vertices[i];
+            porVisitar.add(String.valueOf(map[i].getIndex()));
+            
+            verticesTabela[i] = map[i].getIndex();
+            distanciaMaisCurtaDoStartVertex[i] = Double.POSITIVE_INFINITY;
+            verticeAnterior[i] = -1;
+            i++; 
+        }
+        
+        
+        //__________________ShortestPath______________________
+        //Passo 1 --> Verificar peso entre o startVertex e ele próprio
+        
+        distanciaMaisCurtaDoStartVertex[start.getIndex()] = 0.0;
+        
+        //Passo 2 --> Enquanto porVisitar tiver conteudo
+        while(!porVisitar.isEmpty()){
+            //Passo 3 --> Selecionar a distancia mais curta
+            double menorValor = Double.POSITIVE_INFINITY;
+            int indexMenorValor = 0;
+            for (int j = 0; j < porVisitar.size(); j++) {
+                if (distanciaMaisCurtaDoStartVertex[Integer.parseInt(porVisitar.get(j))] < menorValor) {
+                    menorValor = distanciaMaisCurtaDoStartVertex[Integer.parseInt(porVisitar.get(j))];
+                    indexMenorValor = Integer.parseInt(porVisitar.get(j));
+                }
+            }
+            //Passo 4 --> Selecionar vizinhos do vertice com menor custo por visitar
+            Aposento visitar = this.getVertexByIndex(indexMenorValor);
+            double peso = 0.0;
+            
+            for (int f = 0; f < visitar.getLigacoes().length; f++) {
+                if (!(visitar.getLigacoes()[f].equals("entrada")) && !(visitar.getLigacoes()[f].equals("exterior"))) {
+                    Aposento aux = this.getVertex(String.valueOf(visitar.getLigacoes()[f]));
+                    
+                    if (adjMatrix[indexMenorValor][aux.getIndex()]>=0.0 ) {
+                        peso = menorValor + adjMatrix[indexMenorValor][aux.getIndex()];
+                    }
+                    else{
+                        peso = menorValor;
+                    }
+                    
+                    
+                    //Atualizar a distancia e o vertice anterior se o custo for menor do que existe na tabela
+                    if (peso < distanciaMaisCurtaDoStartVertex[aux.getIndex()]) {
+                        distanciaMaisCurtaDoStartVertex[aux.getIndex()] = peso;
+                        verticeAnterior[aux.getIndex()] = indexMenorValor;
+                    }
+                }
+            
+            }
+            
+            visitados.add(indexMenorValor);
+            porVisitar.remove(String.valueOf(indexMenorValor));
+            
+            /*for (int j = 0; j < porVisitar.size(); j++) {
+                System.out.println(porVisitar.get(j));
+            }
+            System.out.println("\n");*/
+            
+        }
+        
+        
+        //Passo 5 --> Caminho com custo menor 
+        /*System.out.print("Custo: " + distanciaMaisCurtaDoStartVertex[finish.getIndex()] + "-->");
+        System.out.print(finish.getAposento());
+        int caminho = verticeAnterior[finish.getIndex()];
+        while(caminho != start.getIndex()){
+            System.out.print("-->" + this.getVertexByIndex(caminho).getAposento());
+            caminho = verticeAnterior[caminho];
+        }
+        System.out.print("-->" + this.getVertexByIndex(caminho).getAposento());
+
+        System.out.println("");*/
+
+        /*for (int k = 0; k < verticeAnterior.length; k++) {
+            System.out.println(distanciaMaisCurtaDoStartVertex[k]);
+        }*/
+        
+        this.setDistanciaMaisCurtaDoStartVertex(distanciaMaisCurtaDoStartVertex);
+        this.setVerticeAnterior(verticeAnterior);
+        this.setVerticesTabela(verticesTabela);
+    }
+    
+    public double custoShortestPath(T startVertex, T targetVertex){
+        Aposento start = (Aposento) startVertex;
+
+        Aposento finish = (Aposento) targetVertex;
+
+        
+        System.out.print("Custo: " + distanciaMaisCurtaDoStartVertex[finish.getIndex()] + "-->");
+        System.out.print(finish.getAposento());
+        int caminho = verticeAnterior[finish.getIndex()];
+        while(caminho != start.getIndex()){
+            System.out.print("-->" + this.getVertexByIndex(caminho).getAposento());
+            caminho = verticeAnterior[caminho];
+        }
+        System.out.print("-->" + this.getVertexByIndex(caminho).getAposento());
+
+        System.out.println("");
+        
+        
+        
+        return distanciaMaisCurtaDoStartVertex[finish.getIndex()];
     }
 }

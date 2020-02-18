@@ -17,11 +17,21 @@ public class Aposento {
     private int fantasma;
     private String[] ligacoes;
     private int entrada;
+    private int index;
 
-    public Aposento(String aposento, int fantasma, String[] ligacoes) {
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public Aposento(String aposento, int fantasma, String[] ligacoes, int index) {
         this.aposento = aposento;
         this.fantasma = fantasma;
         this.ligacoes = ligacoes;
+        this.index = index;
     }
 
     public String getAposento() {
