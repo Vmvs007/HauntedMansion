@@ -18,6 +18,16 @@ public class Aposento {
     private String[] ligacoes;
     private int entrada;
     private int index;
+    private int shield;
+
+    public int getShield() {
+        return shield;
+    }
+
+    public void setShield(int shield) {
+        this.shield = shield;
+    }
+    
 
     public int getIndex() {
         return index;

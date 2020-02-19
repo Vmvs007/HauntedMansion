@@ -10,6 +10,7 @@ import interfaces.GraphADT;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -791,6 +792,8 @@ public class Graph<T> implements GraphADT<T> {
      * @param pontos
      */
     public void playGame(T startVertex, int pontos) {
+        
+        generateShield();
 
         //Declara variáveis
         Aposento start = (Aposento) startVertex;
@@ -833,10 +836,19 @@ public class Graph<T> implements GraphADT<T> {
                 break;
             }
 
-            //Passo 3 --> Atualizar vida
+            //Passo 3 --> Atualizar vida e verificar escudo
+            
+            
             startVertex = (T) this.getVertex(opcao);
             start = (Aposento) startVertex;
-            vida = vida - start.getFantasma();
+            
+            
+            vida = vida - start.getFantasma() + start.getShield();
+            
+            if (start.getShield()>0) {
+                start.setShield(0);
+            }
+            
             System.out.println("\nVida Atual: " + vida + " pontos");
 
             if (vida <= 0) {
@@ -844,5 +856,40 @@ public class Graph<T> implements GraphADT<T> {
             }
             aposentoJogar.removeAll(aposentoJogar);
         }
+    }
+    
+    public void generateShield(){
+        
+        int min= 999999;
+        int max = -1;
+       
+        int i = 0;
+        
+        
+        
+        Aposento[] map = new Aposento[vertices.length];
+
+        while (vertices[i] != null) {
+            map[i] = (Aposento) vertices[i];
+            
+            if (map[i].getFantasma() > max) {
+                max = map[i].getFantasma();
+            }
+            else if(map[i].getFantasma() < max){
+                min = map[i].getFantasma();
+            }
+            
+            i++;
+        }
+        
+        int randomShield = ThreadLocalRandom.current().nextInt(min, max + 1);    
+        int randomAposento = ThreadLocalRandom.current().nextInt(0, numVertices + 1);;
+        
+        
+        Aposento shieldAposento = (Aposento) vertices[randomAposento];
+        shieldAposento.setShield(randomShield);
+        
+        System.out.println("o shield que tem aposento: " + shieldAposento.getAposento());
+        
     }
 }
