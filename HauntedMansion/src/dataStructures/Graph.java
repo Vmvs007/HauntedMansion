@@ -860,6 +860,10 @@ public class Graph<T> implements GraphADT<T> {
         }
     }
     
+    /**
+     * 
+     * @return 
+     */
     public int generateShield(){
         
         int min= 999999;
