@@ -1,0 +1,31 @@
+{
+"nome": "Defesa01",
+"pontos": 100,
+"mapa": [
+{"aposento": "r00", "fantasma": 0, "ligacoes": ["entrada", "r10"] },
+{"aposento": "r01", "fantasma": 15, "ligacoes": ["r11", "r02"] },
+{"aposento": "r02", "fantasma": 0, "ligacoes": ["r01", "r03"] },
+{"aposento": "r03", "fantasma": 0, "ligacoes": ["r02", "r13", "r04"] },
+{"aposento": "r04", "fantasma": 20, "ligacoes": ["r03", "r14"] },
+{"aposento": "r10", "fantasma": 0, "ligacoes": ["r00", "r11", "r20"] },
+{"aposento": "r11", "fantasma": 0, "ligacoes": ["r10", "r21", "r01", "r12"] },
+{"aposento": "r12", "fantasma": 0, "ligacoes": ["r11", "r22", "r13"] },
+{"aposento": "r13", "fantasma": 0, "ligacoes": ["r12", "r23", "r03"] },
+{"aposento": "r14", "fantasma": 0, "ligacoes": ["r04", "r24"] },
+{"aposento": "r20", "fantasma": 0, "ligacoes": ["r10", "r30"] },
+{"aposento": "r21", "fantasma": 0, "ligacoes": ["r22", "r11"] },
+{"aposento": "r22", "fantasma": 15, "ligacoes": ["r32", "r21", "r12"] },
+{"aposento": "r23", "fantasma": 0, "ligacoes": ["r33", "r13"] },
+{"aposento": "r24", "fantasma": 20, "ligacoes": ["r14", "r34"] },
+{"aposento": "r30", "fantasma": 0, "ligacoes": ["r20", "r40"] },
+{"aposento": "r31", "fantasma": 0, "ligacoes": ["r41", "r32"] },
+{"aposento": "r32", "fantasma": 0, "ligacoes": ["r31", "r42", "r22"] },
+{"aposento": "r33", "fantasma": 0, "ligacoes": ["r43", "r23"] },
+{"aposento": "r34", "fantasma": 0, "ligacoes": ["r24", "r44"] },
+{"aposento": "r40", "fantasma": 0, "ligacoes": ["r30", "r41"] },
+{"aposento": "r41", "fantasma": 0, "ligacoes": ["r40", "r31", "r42"] },
+{"aposento": "r42", "fantasma": 0, "ligacoes": ["r41", "r32", "r43"] },
+{"aposento": "r43", "fantasma": 0, "ligacoes": ["r42", "r33"] },
+{"aposento": "r44", "fantasma": 0, "ligacoes": ["exterior", "r34"] }
+]
+}

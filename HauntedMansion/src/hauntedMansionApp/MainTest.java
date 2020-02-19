@@ -28,29 +28,13 @@ public class MainTest {
         //Programa começa
         System.out.println("_____ HAUNTED MANSION STARTS _____");
 
-        /*
-        //Lê o path para o ficheiro JSON
-        String path = ("mapa.json");
-
-        //Declara variáveis
-        Game game;
-        int i = 0;
-
-        //Abre o ficheiro
-        FileManager fm = new FileManager();
-        game = fm.readFile(path);
-        
-        
-        //Imprime o game
-        System.out.println(game.toString());
-        System.out.println("");
-         */
+       
         //Declara variáveis
         int i = 0;
         Aposento[] mapa= new Aposento[9];
         LinkedMap teste;
         int opcao = 0;
-        Game game;
+        Game game = null;
         teste = new LinkedMap();
         
         //Menu da aplicacao
@@ -58,8 +42,8 @@ public class MainTest {
             System.out.println("\n\n___________________ HAUNTED MANSION GAME ___________________");
             System.out.println("\n                  =========================");
             System.out.println("                  |     1 - Inserir Mapa    |");
-            System.out.println("                  |     2 - Jogar           |");
-            System.out.println("                  |     3 - Visualizar Mapa |");
+            System.out.println("                  |     2 - Matriz adj      |");
+            System.out.println("                  |     3 - Jogar           |");
             System.out.println("                  |     4 - Classificacoes  |");
             System.out.println("                  |     5 - Opcao 5         |");
             System.out.println("                  |     6 - Opcao 6         |");
@@ -134,6 +118,8 @@ public class MainTest {
                     }
                     else System.out.println("Mapa inválido! Por favor use um mapa novo!");
                     
+                    
+                    
                     break;
                 case 2:
                     Aposento a = teste.getVertex("hall");
@@ -143,7 +129,7 @@ public class MainTest {
                     
                     break;
                 case 3:
-                    System.out.println("Case 2");
+                    teste.playGame(game.getMapa()[game.getEntrada()], game.getPontos());
                     break;
                 case 4:
                     System.out.println("Case 2");

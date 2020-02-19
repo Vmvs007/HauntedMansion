@@ -9,6 +9,7 @@ import hauntedMansionApp.*;
 import interfaces.GraphADT;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -246,7 +247,7 @@ public class Graph<T> implements GraphADT<T> {
              */
             if (j < 1) {
                 for (int i = 0; i < numVertices; i++) {
-                    if (adjMatrix[x.intValue()][i] > 0 && !visited[i]) {
+                    if (adjMatrix[x.intValue()][i] >= 0 && !visited[i]) {
                         traversalQueue.enqueue(new Integer(i));
                         visited[i] = true;
                     }
@@ -778,15 +779,79 @@ public class Graph<T> implements GraphADT<T> {
         System.out.print(finish.getAposento());
         int caminho = verticeAnterior[finish.getIndex()];
         while(caminho != start.getIndex()){
-            System.out.print("-->" + this.getVertexByIndex(caminho).getAposento());
+            System.out.print("<--" + this.getVertexByIndex(caminho).getAposento());
             caminho = verticeAnterior[caminho];
         }
-        System.out.print("-->" + this.getVertexByIndex(caminho).getAposento());
+        System.out.print("<--" + this.getVertexByIndex(caminho).getAposento());
 
         System.out.println("");
         
         
+        /*Iterator itr = this.adjVertex(startVertex);
+        
+        while(itr.hasNext()) {
+         Object element = itr.next();
+         System.out.print(element + " ");
+      }*/
         
         return distanciaMaisCurtaDoStartVertex[finish.getIndex()];
+    }
+    
+    
+    public void playGame(T startVertex, int pontos){
+        
+        Aposento start = (Aposento) startVertex;
+        
+        Scanner input = new Scanner(System.in);
+        String opcao;
+        
+        //Passo 1 --> Imprimir vertice inicial
+        int vida =  pontos;
+        ArrayList<String> aposentoJogar = new ArrayList<String>();
+        
+        while(vida > 0){
+            
+            
+            
+            Iterator itr = this.adjVertex(startVertex);
+            itr.next(); //Para não listar ele proprio
+            System.out.println("Escolher:");
+             if (start.getLigacoes()[0].equals("exterior")) {
+                aposentoJogar.add("exterior");
+                System.out.println("exterior");
+            }
+            while(itr.hasNext()) {
+                Object element = itr.next();
+                Aposento aposento = (Aposento) element;
+                System.out.println(aposento.getAposento() + " ");
+                aposentoJogar.add(aposento.getAposento());
+            }
+            
+            //Passo 2 --> escolher aposento para jogar
+            System.out.print("Opção:");
+            opcao = input.nextLine();
+            while(!aposentoJogar.contains(opcao)){
+                 System.out.print("Opção:");
+                 opcao = input.nextLine();
+                 
+            }
+            
+            if (opcao.equals("exterior")) {
+                System.out.println("Ganhou");
+                break;
+            }
+            
+            //Passo 3 --> Atualizar vida
+            startVertex = (T) this.getVertex(opcao);
+            start = (Aposento) startVertex;
+            vida = vida - start.getFantasma();
+            System.out.println("Vida Atual: " + vida);
+            
+            
+            if (vida <=0 ) {
+                System.out.println("Perdeu");
+            }
+            aposentoJogar.removeAll(aposentoJogar);
+      }
     }
 }
