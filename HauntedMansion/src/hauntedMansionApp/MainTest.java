@@ -96,7 +96,6 @@ public class MainTest {
             System.out.println("                   |     5 - Opcao 6                |");
             System.out.println("                   |     0 - Sair                   |");
             System.out.println("                    ================================\n");
-
             System.out.print("\n");
             System.out.println("Insira uma opcao:");
             Scanner in = new Scanner(System.in);
@@ -138,6 +137,7 @@ public class MainTest {
 
                         i++;
                     }
+                    
                     break;
                 case 5:
                     System.out.println("Case 5");
