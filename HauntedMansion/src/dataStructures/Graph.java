@@ -885,10 +885,25 @@ public class Graph<T> implements GraphADT<T> {
         }
         
         int randomShield = ThreadLocalRandom.current().nextInt(min, max + 1);    
-        int randomAposento = ThreadLocalRandom.current().nextInt(0, numVertices + 1);;
         
         
+        int randomAposento = ThreadLocalRandom.current().nextInt(0, numVertices + 1);
+        
+        
+        boolean hasGhost = true;
         Aposento shieldAposento = (Aposento) vertices[randomAposento];
+
+        
+        while(hasGhost){
+            if (shieldAposento.getFantasma()>0) {
+               randomAposento = ThreadLocalRandom.current().nextInt(0, numVertices + 1);
+               shieldAposento = (Aposento) vertices[randomAposento];
+            }
+            else hasGhost = false;
+
+        }
+        
+        
         shieldAposento.setShield(randomShield);
         
         System.out.println("o shield que tem aposento: " + shieldAposento.getAposento());
