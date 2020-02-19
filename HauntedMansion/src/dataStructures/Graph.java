@@ -791,7 +791,7 @@ public class Graph<T> implements GraphADT<T> {
      * @param startVertex
      * @param pontos
      */
-    public void playGame(T startVertex, int pontos) {
+    public int playGame(T startVertex, int pontos) {
         
         int shieldAposento = generateShield();
 
@@ -854,10 +854,11 @@ public class Graph<T> implements GraphADT<T> {
             System.out.println("\nVida Atual: " + vida + " pontos");
 
             if (vida <= 0) {
-                System.out.println("\n\n========== OOPS! PERDEU! ==========");
+                System.out.println("\n\n==================== OOPS! PERDEU! ====================");
             }
             aposentoJogar.removeAll(aposentoJogar);
         }
+        return vida;
     }
     
     /**
@@ -910,7 +911,7 @@ public class Graph<T> implements GraphADT<T> {
         
         shieldAposento.setShield(randomShield);
         
-        System.out.println("o shield que tem aposento: " + shieldAposento.getAposento());
+        //System.out.println("o shield que tem aposento: " + shieldAposento.getAposento());
         
         return randomAposento;
         

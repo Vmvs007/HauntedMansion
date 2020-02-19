@@ -42,7 +42,7 @@ public class MainTest {
         System.out.println("\n\n==================== Inserir Mapa ====================");
 
         //Lê o path para o ficheiro
-        System.out.println("\nInserir path do ficheiro: ");
+        System.out.println("\nInserir path do ficheiro (Exemplo: mapa.json): ");
         Scanner scanner = new Scanner(System.in);
         String path = scanner.nextLine();
         System.out.println("\nO path inserido foi " + path);
@@ -113,11 +113,14 @@ public class MainTest {
                     //Jogar
                     //Escolha do username
                     Scanner usernameInput = new Scanner(System.in);
-                    System.out.println("\nInsira o nome de utilziador: ");
+                    System.out.println("\nInsira o username: ");
                     String username = usernameInput.nextLine();
                     //Nome do jogo
                     System.out.println(username+" vai jogar: " + game.getNome() + " com " + game.getPontos()+" pontos de vida!");
-                    teste.playGame(game.getMapa()[game.getEntrada()], game.getPontos());
+                    int vida = teste.playGame(game.getMapa()[game.getEntrada()], game.getPontos());
+                    
+                    JsonWrite jsonWrite = new JsonWrite();
+                    jsonWrite.writeJson(username,game.getNome(),String.valueOf(vida));
                     break;
                 case 3:
                     System.out.println("Case 3");
