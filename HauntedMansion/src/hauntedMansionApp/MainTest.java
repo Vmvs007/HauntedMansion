@@ -5,6 +5,7 @@
  */
 package hauntedMansionApp;
 
+import dataStructures.ArrayOrderedList;
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.File;
@@ -35,6 +36,7 @@ public class MainTest {
         int opcao = 0;
         Game game = null;
         teste = new LinkedMap();
+        ArrayOrderedList<Classificacao> classificacoes = new ArrayOrderedList<Classificacao>();
 
         /**
          * Insere mapa
@@ -93,7 +95,6 @@ public class MainTest {
             System.out.println("                   |     2 - Jogar                  |");
             System.out.println("                   |     3 - Classificacoes         |");
             System.out.println("                   |     4 - Solucoes | Walktrough  |");
-            System.out.println("                   |     5 - Opcao 6                |");
             System.out.println("                   |     0 - Sair                   |");
             System.out.println("                    ================================\n");
             System.out.print("\n");
@@ -116,14 +117,21 @@ public class MainTest {
                     System.out.println("\nInsira o username: ");
                     String username = usernameInput.nextLine();
                     //Nome do jogo
-                    System.out.println(username+" vai jogar: " + game.getNome() + " com " + game.getPontos()+" pontos de vida!");
+                    System.out.println(username + " vai jogar: " + game.getNome() + " com " + game.getPontos() + " pontos de vida!");
                     int vida = teste.playGame(game.getMapa()[game.getEntrada()], game.getPontos());
-                    
-                    JsonWrite jsonWrite = new JsonWrite();
-                    jsonWrite.writeJson(username,game.getNome(),String.valueOf(vida));
+
+                    //Escreve no ficheiro de classificacoes
+                    classificacoes.add(new Classificacao(username, vida));
                     break;
                 case 3:
-                    System.out.println("Case 3");
+                    System.out.println("\n\n==================== Classificacoes ====================");
+
+                    Iterator classificationsITR = classificacoes.iterator();
+
+                    while (classificationsITR.hasNext()) {
+                        System.out.println(classificationsITR.next().toString());
+                    }
+
                     break;
                 case 4:
                     System.out.println("\n\n==================== SOLUCOES | SHORTEST PATH ====================");
@@ -140,12 +148,10 @@ public class MainTest {
 
                         i++;
                     }
-                    
-                    break;
-                case 5:
-                    System.out.println("Case 5");
+
                     break;
                 case 0:
+                    JsonWrite.writeJson(game.getNome(), classificacoes);
                     System.out.println("\n\n==================== HAUNTED MANSION CLOSES ====================");
                     break;
                 default:

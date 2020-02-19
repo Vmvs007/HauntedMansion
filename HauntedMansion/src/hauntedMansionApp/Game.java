@@ -5,6 +5,7 @@
  */
 package hauntedMansionApp;
 
+import dataStructures.ArrayOrderedList;
 import java.util.Arrays;
 
 /**
@@ -17,7 +18,7 @@ public class Game {
     private int pontos;
     private Aposento[] mapa;
     private int entrada;
-
+    
     public int getEntrada() {
         return entrada;
     }

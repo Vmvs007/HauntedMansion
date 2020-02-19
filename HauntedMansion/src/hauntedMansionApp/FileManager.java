@@ -5,6 +5,7 @@
  */
 package hauntedMansionApp;
 
+import dataStructures.ArrayList;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -70,8 +71,8 @@ public class FileManager {
                         ligacoes[contaLigacoes] = ligacoesArray.get(contaLigacoes).toString();
 
                     }
-                    
-                    mapa[contaAposentos] = new Aposento(aposento, fantasma, ligacoes,contaAposentos);
+
+                    mapa[contaAposentos] = new Aposento(aposento, fantasma, ligacoes, contaAposentos);
                     contaAposentos++;
                 }
             }
@@ -85,8 +86,7 @@ public class FileManager {
         } catch (IOException | ParseException e) {
             System.out.println("Exception");
         }
-        //Retorno em caso de não haverem Users no Grafo Social
+
         return gamenull;
     }
-
 }
