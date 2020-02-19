@@ -54,10 +54,18 @@ public class Aposento {
         return ligacoes;
     }
 
-    public void setLigacoes(String[] ligacoes) {        
+    public void setLigacoes(String[] ligacoes) {
         this.ligacoes = ligacoes;
     }
 
+    @Override
+    public String toString() {
+        return "\nAposento = " + aposento + "\n"
+                + "Fantasma = " + fantasma + "\n"
+                + "Ligacoes = " + Arrays.toString(ligacoes) + "\n";
+    }
+    /*
+    // toString para jLabel
     @Override
     public String toString() {
         return "<html>"
@@ -68,4 +76,5 @@ public class Aposento {
                 + "</html>";
 
     }
+     */
 }

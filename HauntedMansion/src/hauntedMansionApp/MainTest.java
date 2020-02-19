@@ -26,7 +26,7 @@ public class MainTest {
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         //Programa começa
-        System.out.println("_____ HAUNTED MANSION STARTS _____");
+        System.out.println("==================== HAUNTED MANSION STARTS HERE ====================");
 
        
         //Declara variáveis
@@ -39,7 +39,7 @@ public class MainTest {
         
         //Menu da aplicacao
         do {
-            System.out.println("\n\n___________________ HAUNTED MANSION GAME ___________________");
+            System.out.println("\n\n==================== HAUNTED MANSION GAME ====================");
             System.out.println("\n                  =========================");
             System.out.println("                  |     1 - Inserir Mapa    |");
             System.out.println("                  |     2 - Matriz adj      |");
@@ -57,13 +57,13 @@ public class MainTest {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Inserir Mapa");
+                    System.out.println("\n\n==================== Inserir Mapa ====================");
 
                     //Lê o path para o ficheiro
-                    System.out.println("Inserir path do ficheiro: ");
+                    System.out.println("\nInserir path do ficheiro: ");
                     Scanner scanner = new Scanner(System.in);
                     String path = scanner.nextLine();
-                    System.out.println("O path inserido foi " + path);
+                    System.out.println("\nO path inserido foi " + path);
 
                     FileManager fm = new FileManager();
                     i= 0;
@@ -98,7 +98,7 @@ public class MainTest {
                     i=0;
                     boolean canPlay=true;
                     
-                    System.out.println("Caminhos mais curtos para cada saída: ");
+                    System.out.println("\nCaminhos mais curtos para cada saída: \n");
 
                     while (i < game.getMapa().length) {
                         
@@ -114,9 +114,9 @@ public class MainTest {
                     }
                     
                     if (canPlay) {
-                        System.out.println("Mapa válido");
+                        System.out.println("\nMapa válido!");
                     }
-                    else System.out.println("Mapa inválido! Por favor use um mapa novo!");
+                    else System.out.println("\nMapa inválido! Por favor use um mapa novo!");
                     
                     
                     
@@ -125,10 +125,10 @@ public class MainTest {
                     Aposento a = teste.getVertex("hall");
                     System.out.println(a.getAposento());
                     System.out.println(teste.printADJMatrix());
-                    System.out.println("___________________ NOVO JOGO ___________________");
                     
                     break;
                 case 3:
+                    System.out.println(game.getNome());
                     teste.playGame(game.getMapa()[game.getEntrada()], game.getPontos());
                     break;
                 case 4:
@@ -141,10 +141,10 @@ public class MainTest {
                     System.out.println("Case 5");
                     break;
                 case 0:
-                    System.out.println("___________________ HAUNTED MANSION CLOSES ___________________");
+                    System.out.println("\n\n==================== HAUNTED MANSION CLOSES ====================");
                     break;
                 default:
-                    System.out.println("Opção Inválida!");
+                    System.out.println("\nOpção Inválida!");
                     break;
             }
         } while (opcao != 0);

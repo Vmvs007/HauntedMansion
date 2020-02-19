@@ -51,12 +51,20 @@ public class Game {
     public void setMapa(Aposento[] mapa) {
         this.mapa = mapa;
     }
-    
+
     public void setEntrada(int index) {
         this.entrada = index;
     }
 
-
+    @Override
+    public String toString() {
+        return "\nGame :" + "\n"
+                + "Nome = " + nome + "\n"
+                + "Pontos = " + pontos + "\n"
+                + "Mapa = " + Arrays.toString(mapa) + "\n";
+    }
+    /*
+    // toString para jLabel
     @Override
     public String toString() {
         return "<html>"
@@ -67,4 +75,5 @@ public class Game {
                 + "}" + "<br>"
                 + "</html>";
     }
+     */
 }
