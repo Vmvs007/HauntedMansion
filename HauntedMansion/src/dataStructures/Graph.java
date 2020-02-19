@@ -793,7 +793,7 @@ public class Graph<T> implements GraphADT<T> {
      */
     public void playGame(T startVertex, int pontos) {
         
-        generateShield();
+        int shieldAposento = generateShield();
 
         //Declara variáveis
         Aposento start = (Aposento) startVertex;
@@ -833,6 +833,8 @@ public class Graph<T> implements GraphADT<T> {
             if (opcao.equals("exterior")) {
                 System.out.println("\n\n==================== PARABÉNS! GANHOU! ====================");
                 System.out.println("\nAcabou o jogo com " + vida + " pontos de vida!");
+                Aposento resetShield = this.getVertexByIndex(shieldAposento);
+                resetShield.setShield(0);
                 break;
             }
 
@@ -858,7 +860,7 @@ public class Graph<T> implements GraphADT<T> {
         }
     }
     
-    public void generateShield(){
+    public int generateShield(){
         
         int min= 999999;
         int max = -1;
@@ -890,6 +892,8 @@ public class Graph<T> implements GraphADT<T> {
         shieldAposento.setShield(randomShield);
         
         System.out.println("o shield que tem aposento: " + shieldAposento.getAposento());
+        
+        return randomAposento;
         
     }
 }
