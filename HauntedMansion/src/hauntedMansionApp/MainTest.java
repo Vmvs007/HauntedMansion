@@ -41,13 +41,13 @@ public class MainTest {
         do {
             System.out.println("\n\n==================== HAUNTED MANSION GAME ====================");
             System.out.println("\n                  =========================");
-            System.out.println("                  |     1 - Inserir Mapa    |");
-            System.out.println("                  |     2 - Matriz adj      |");
-            System.out.println("                  |     3 - Jogar           |");
-            System.out.println("                  |     4 - Classificacoes  |");
-            System.out.println("                  |     5 - Opcao 5         |");
-            System.out.println("                  |     6 - Opcao 6         |");
-            System.out.println("                  |     0 - Sair            |");
+            System.out.println("                  |     1 - Inserir Mapa               |");
+            System.out.println("                  |     2 - Ver mapa com a sua coluna  |");
+            System.out.println("                  |     3 - Jogar                      |");
+            System.out.println("                  |     4 - Classificacoes             |");
+            System.out.println("                  |     5 - Opcao 5                    |");
+            System.out.println("                  |     6 - Opcao 6                    |");
+            System.out.println("                  |     0 - Sair                       |");
             System.out.println("                  =========================\n");
 
             System.out.print("\n");
@@ -123,7 +123,7 @@ public class MainTest {
                     break;
                 case 2:
                     Aposento a = teste.getVertex("hall");
-                    System.out.println(a.getAposento());
+                    //System.out.println(a.getAposento());
                     System.out.println(teste.printADJMatrix());
                     
                     break;
